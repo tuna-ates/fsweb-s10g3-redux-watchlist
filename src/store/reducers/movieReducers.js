@@ -1,6 +1,6 @@
 
 
-import { NEXT,PREV } from "../actions/moviesActions"
+import { NEXT,PREV,REMOVE_MOVİE,RESTORE_MOVİE } from "../actions/moviesActions"
 import {movies} from "../../movies"
 
  const initialState={
@@ -29,8 +29,11 @@ import {movies} from "../../movies"
             else{
                 return{...state,sira:state.sira-1,disabledNav:"NONE"}
             }
-            
-        default:
+            case REMOVE_MOVİE:
+                return{...state,movies:state.movies.filter((item)=>item.id!==action.payload.id),sira:state.sira===0?0:state.sira-1}
+            case RESTORE_MOVİE:
+                return{...state,movies:[...state.movies,action.payload]}
+                default:
             return state
             break;
     }
